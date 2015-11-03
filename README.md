@@ -15,7 +15,7 @@ Git log parser for Node.JS
 var gitlog = require('gitlog')
   , options =
     { repo: __dirname + '/test-repo-folder'
-    , number: 20
+    , 'max-count': 20
     , author: 'Dom Harrington'
     , fields:
       [ 'hash'
@@ -39,7 +39,7 @@ See [git log](http://git-scm.com/docs/git-log)
 ### repo
 The location of the repo, required field.
 
-### number
+### max-count
 The number of commits to return, defaults to 10.
 
 ### since/after
