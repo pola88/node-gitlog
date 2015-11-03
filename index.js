@@ -27,7 +27,7 @@ var exec = require('child_process').exec
     Add optional parameter to command
 */
 function addOptional(command, options) {
-  var cmdOptional = [ 'author', 'since', 'after', 'until', 'before', 'committer' ]
+  var cmdOptional = [ 'max-count', 'author', 'since', 'after', 'until', 'before', 'committer' ]
   for (var i = cmdOptional.length; i--;) {
     if (options[cmdOptional[i]]) {
       command += ' --' + cmdOptional[i] + '="' + options[cmdOptional[i]] + '"'
@@ -41,8 +41,7 @@ function gitlog(options, cb) {
   if (!cb) throw new Error('Callback required!')
 
   var defaultOptions =
-    { number: 10
-    , fields: [ 'abbrevHash', 'hash', 'subject', 'authorName' ]
+    { fields: [ 'abbrevHash', 'hash', 'subject', 'authorName' ]
     , nameStatus:true
     }
 
@@ -57,7 +56,7 @@ function gitlog(options, cb) {
   }
 
   // Start constructing command
-  var command = 'git log -n ' + options.number
+  var command = 'git log'
 
   command = addOptional(command, options)
 
@@ -108,7 +107,7 @@ function fileNameAndStatus(options) {
 
 function parseCommits(commits, fields,nameStatus) {
   return commits.map(function(commit) {
-    var parts = commit.split('@end@\n\n')
+    var parts = commit.split('@end@')
     commit = parts[0].split(delimiter)
 
     if (parts[1]) {

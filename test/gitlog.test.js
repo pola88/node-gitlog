@@ -43,14 +43,22 @@ describe('gitlog', function() {
   })
 
   it('returns 20 commits from specified branch', function(done) {
-    gitlog({ repo: testRepoLocation, branch: 'master', number: 100 }, function(err, commits) {
+    gitlog({ repo: testRepoLocation, branch: 'master', 'max-count': 100 }, function(err, commits) {
       commits.length.should.equal(20)
       done()
     })
   })
 
-  it('defaults to 10 commits', function(done) {
+  it('no limit commits', function(done) {
     gitlog({ repo: testRepoLocation }, function(err, commits) {
+      commits.length.should.equal(15)
+
+      done()
+    })
+  })
+
+  it('returns 10 commits', function(done) {
+    gitlog({ repo: testRepoLocation, 'max-count': 10 }, function(err, commits) {
       commits.length.should.equal(10)
 
       done()
@@ -97,7 +105,7 @@ describe('gitlog', function() {
   it('returns fields with "since" limit', function(done) {
 
     gitlog({ repo: testRepoLocation, since: '1 minutes ago' }, function(err, commits) {
-      commits.length.should.equal(10)
+      commits.length.should.equal(15)
 
       done()
     })
@@ -106,7 +114,7 @@ describe('gitlog', function() {
   it('returns fields with "after" limit', function(done) {
 
     gitlog({ repo: testRepoLocation, after: '1 minutes ago' }, function(err, commits) {
-      commits.length.should.equal(10)
+      commits.length.should.equal(15)
 
       done()
     })
